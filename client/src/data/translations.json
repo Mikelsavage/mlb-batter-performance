@@ -1,7 +1,9 @@
 {
     "en-US": {
         "translation": {
-            "test": "Click on the Vite and React logos to learn more"
+            "errors.playersData": "Error loading players data",
+            "loading": "Loading...",
+            "players": "Players"
         }
     }
 }

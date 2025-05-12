@@ -4,14 +4,13 @@
         "allowJs": true,
         "jsx": "react-jsx",
         "target": "ES6",
-        "module": "commonjs",
+        "module": "Preserve",
         "outDir": "./dist",
         "strict": true,
         "esModuleInterop": true,
         "skipLibCheck": true,
         "forceConsistentCasingInFileNames": true,
-        "plugins": [{ "name": "typescript-plugin-css-modules" }],
-        "resolveJsonModule": true
+        "plugins": [{ "name": "typescript-plugin-css-modules" }]
     },
     "include": ["./src/**/*"]
 }
