@@ -1,7 +1,17 @@
 {
-  "files": [],
-  "references": [
-    { "path": "./tsconfig.app.json" },
-    { "path": "./tsconfig.node.json" }
-  ]
+    "compileOnSave": true,
+    "compilerOptions": {
+        "allowJs": true,
+        "jsx": "react-jsx",
+        "target": "ES6",
+        "module": "commonjs",
+        "outDir": "./dist",
+        "strict": true,
+        "esModuleInterop": true,
+        "skipLibCheck": true,
+        "forceConsistentCasingInFileNames": true,
+        "plugins": [{ "name": "typescript-plugin-css-modules" }],
+        "resolveJsonModule": true
+    },
+    "include": ["./src/**/*"]
 }
