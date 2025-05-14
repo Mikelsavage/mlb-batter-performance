@@ -1,5 +1,6 @@
 // Includes styles for font-size, font families, and text colors
 @use "./variables/typography";
+@use "./variables/colors";
 
 :root {
     font-family: typography.$font-family;
@@ -12,7 +13,7 @@
 }
 
 a {
-    color: $color-primary;
+    color: colors.$color-primary;
     font-weight: 500;
 }
 
@@ -22,7 +23,7 @@ h2,
 .h2,
 h3,
 .h3 {
-    color: $color-text-100;
+    color: colors.$color-text-100;
     line-height: 1.2;
 }
 
