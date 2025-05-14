@@ -1,0 +1,79 @@
+// Background
+$color-light-background-000: #ffffff;
+$color-light-background-050: #fcfcfc;
+$color-light-background-100: #f8f8f8;
+$color-light-background-200: #f0f0f0;
+$color-light-background-300: #e8e8e8;
+$color-light-background-400: #e0e0e0;
+
+$color-dark-background-000: #101010;
+$color-dark-background-050: #141414;
+$color-dark-background-100: #181818;
+$color-dark-background-200: #202020;
+$color-dark-background-300: #282828;
+$color-dark-background-400: #303030;
+
+$color-background-000: light-dark(
+    $color-light-background-000,
+    $color-dark-background-000
+);
+$color-background-050: light-dark(
+    $color-light-background-050,
+    $color-dark-background-050
+);
+$color-background-100: light-dark(
+    $color-light-background-100,
+    $color-dark-background-100
+);
+$color-background-200: light-dark(
+    $color-light-background-200,
+    $color-dark-background-200
+);
+$color-background-300: light-dark(
+    $color-light-background-300,
+    $color-dark-background-300
+);
+$color-background-400: light-dark(
+    $color-light-background-400,
+    $color-dark-background-400
+);
+
+// Text
+$color-light-text-100: #101010;
+$color-light-text-200: #282828;
+$color-light-text-300: #404040;
+$color-light-text-400: #575757;
+$color-light-text-600: #707070;
+$color-light-text-700: #909090;
+$color-light-text-800: #b0b0b0;
+
+$color-dark-text-100: #f8f8f8;
+$color-dark-text-200: #e0e0e0;
+$color-dark-text-300: #c8c8c8;
+$color-dark-text-400: #afafaf;
+$color-dark-text-600: #909090;
+$color-dark-text-700: #707070;
+$color-dark-text-800: #505050;
+
+$color-text-100: light-dark($color-light-text-100, $color-dark-text-100);
+$color-text-200: light-dark($color-light-text-200, $color-dark-text-200);
+$color-text-300: light-dark($color-light-text-300, $color-dark-text-300);
+$color-text-400: light-dark($color-light-text-400, $color-dark-text-400);
+$color-text-600: light-dark($color-light-text-600, $color-dark-text-600);
+$color-text-700: light-dark($color-light-text-700, $color-dark-text-700);
+$color-text-800: light-dark($color-light-text-800, $color-dark-text-800);
+
+// Accent colors
+$color-primary: #eac407;
+
+// Status
+$color-danger: #e35757;
+$color-danger-background: #cc9a9a;
+$color-error: #e35757;
+$color-error-background: #cc9a9a;
+$color-info: #3481e6;
+$color-info-backgrond: #99b7de;
+$color-success: #37a174;
+$color-success-background: #bee7d6;
+$color-warning: #bfae00;
+$color-warning-background: #efebba;

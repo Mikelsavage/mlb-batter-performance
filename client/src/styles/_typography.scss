@@ -1,0 +1,54 @@
+// Includes styles for font-size, font families, and text colors
+@use "./variables/typography";
+
+:root {
+    font-family: typography.$font-family;
+    line-height: 1.5;
+    font-weight: 400;
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+a {
+    color: $color-primary;
+    font-weight: 500;
+}
+
+h1,
+.h1,
+h2,
+.h2,
+h3,
+.h3 {
+    color: $color-text-100;
+    line-height: 1.2;
+}
+
+h1,
+.h1 {
+    font-size: 2.5em;
+}
+
+h2,
+.h2 {
+    font-size: 1.5em;
+}
+
+h3,
+.h3 {
+    font-size: 1.25em;
+}
+
+input {
+    font-family: typography.$font-family;
+}
+
+p {
+    margin: 0;
+}
+
+.page-title {
+    margin-block-start: 0;
+}

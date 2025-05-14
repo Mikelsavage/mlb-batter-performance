@@ -1,13 +1,24 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import type { Player } from "../types/players";
 
+type TokenResponse = {
+    token: string;
+    expires: string;
+};
+
+type PlayerByIdQuery = {
+    id: number;
+    token: string;
+};
+
 export const playersApi = createApi({
     reducerPath: "playersApi",
     baseQuery: fetchBaseQuery({
         baseUrl: "https://project.trumedianetworks.com/api/",
     }),
+    keepUnusedDataFor: 3600,
     endpoints: (build) => ({
-        getToken: build.query<{ token: string; expires: string }, void>({
+        getToken: build.query<TokenResponse, void>({
             query: () => ({
                 url: "token",
                 headers: {
@@ -24,10 +35,18 @@ export const playersApi = createApi({
                 },
             }),
         }),
+        getPlayerById: build.query<Player | undefined, PlayerByIdQuery>({
+            query: ({ id, token }) => ({
+                url: `mlb/player/${id}`,
+                headers: {
+                    tempToken: token,
+                },
+            }),
+        }),
     }),
 });
 
-export const { useGetTokenQuery } = playersApi;
+export const { useGetTokenQuery, useLazyGetPlayerByIdQuery } = playersApi;
 
 // Custom hook that combines getToken and getPlayers
 export const useGetPlayersWithToken = () => {
@@ -49,6 +68,33 @@ export const useGetPlayersWithToken = () => {
 
     return {
         players,
+        isLoading: isTokenLoading || isPlayersLoading,
+        error: tokenError || playersError,
+    };
+};
+
+export const useGetPlayerByIdWithToken = (playerId: number) => {
+    const {
+        data: tokenData,
+        isLoading: isTokenLoading,
+        error: tokenError,
+    } = useGetTokenQuery();
+
+    const token = tokenData?.token;
+
+    const {
+        data: player,
+        isLoading: isPlayersLoading,
+        error: playersError,
+    } = playersApi.endpoints.getPlayerById.useQuery(
+        { id: playerId, token: token ?? "" },
+        {
+            skip: !token,
+        }
+    );
+
+    return {
+        player,
         isLoading: isTokenLoading || isPlayersLoading,
         error: tokenError || playersError,
     };

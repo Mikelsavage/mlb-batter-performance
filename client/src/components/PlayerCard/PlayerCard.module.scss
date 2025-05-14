@@ -1,0 +1,40 @@
+@use "../../styles/variables/colors";
+
+.card {
+    background-color: colors.$color-background-300;
+    border-radius: 0.5rem;
+    height: 100%;
+    position: relative;
+}
+
+.playerImage {
+    padding-block-start: 1rem;
+    width: 100%;
+}
+
+.playerInfo {
+    padding: 1rem;
+
+    h3 {
+        margin: 0;
+    }
+}
+
+.teamImage {
+    background-color: colors.$color-light-background-200;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: -0.75rem;
+    right: -0.75rem;
+    width: 3rem;
+    height: 3rem;
+    border-radius: 50%;
+    padding: 0.5rem;
+
+    img {
+        max-height: 100%;
+        max-width: 100%;
+    }
+}

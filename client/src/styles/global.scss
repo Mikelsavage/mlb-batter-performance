@@ -1,0 +1,18 @@
+@use "variables/colors";
+
+* {
+    box-sizing: border-box;
+}
+
+:root {
+    background-color: colors.$color-background-100;
+    color-scheme: light dark;
+    color: colors.$color-text-200;
+}
+
+body {
+    background-color: colors.$color-background-100;
+    margin: 0;
+    min-width: 320px;
+    min-height: 100vh;
+}

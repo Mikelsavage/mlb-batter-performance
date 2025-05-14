@@ -3,6 +3,8 @@ import isEmpty from "lodash/isEmpty";
 import "../../components/App/App.css";
 import "../../utils/i18next";
 import { useGetPlayersWithToken } from "../../services/players";
+import { PlayersList } from "../../components/PlayersList/PlayersList";
+import { Layout } from "../../components/Layout/Layout";
 
 export const PlayersPage = () => {
     const { players = [], isLoading, error } = useGetPlayersWithToken();
@@ -13,7 +15,7 @@ export const PlayersPage = () => {
     if (error) return <div>{t("errors.playersData")}</div>;
 
     return (
-        <>
+        <Layout>
             <h1>{t("players")}</h1>
 
             {isEmpty(players) ? (
@@ -21,12 +23,8 @@ export const PlayersPage = () => {
                     <p>{t("players.empty")}</p>
                 </div>
             ) : (
-                <ul>
-                    {players?.map((player) => (
-                        <li key={player.playerId}>{player.playerFullName}</li>
-                    ))}
-                </ul>
+                <PlayersList players={players} />
             )}
-        </>
+        </Layout>
     );
 };
