@@ -1,0 +1,13 @@
+.pageContent {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4rem;
+}
+
+.statsContainer {
+    flex: 1;
+}
+
+.chartContainer {
+    width: 100%;
+}

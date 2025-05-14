@@ -11,7 +11,7 @@ $color-dark-background-050: #141414;
 $color-dark-background-100: #181818;
 $color-dark-background-200: #202020;
 $color-dark-background-300: #282828;
-$color-dark-background-400: #303030;
+$color-dark-background-400: #444444;
 
 $color-background-000: light-dark(
     $color-light-background-000,
@@ -42,7 +42,7 @@ $color-background-400: light-dark(
 $color-light-text-100: #101010;
 $color-light-text-200: #282828;
 $color-light-text-300: #404040;
-$color-light-text-400: #575757;
+$color-light-text-400: #666666;
 $color-light-text-600: #707070;
 $color-light-text-700: #909090;
 $color-light-text-800: #b0b0b0;
@@ -77,3 +77,12 @@ $color-success: #37a174;
 $color-success-background: #bee7d6;
 $color-warning: #bfae00;
 $color-warning-background: #efebba;
+
+// Stat Grades
+$color-s-tier: #eac407;
+$color-a-tier: #61dd42;
+$color-b-tier: #a4db4c;
+$color-c-tier: #cbd851;
+$color-d-tier: #e9b24d;
+$color-e-tier: #e79a41;
+$color-f-tier: #ff6262;

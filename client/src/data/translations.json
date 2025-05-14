@@ -4,9 +4,28 @@
             "errors.playerData": "Error loading player data",
             "errors.playersData": "Error loading players data",
             "loading": "Loading...",
+            "player.avgStats.heading": "AVG vs Teams",
+            "player.bestAvgAgainstTeams.heading": "Best AVG Against Teams",
+            "player.bestOpsAgainstTeams.heading": "Best OPS Against Teams",
             "player.loading": "Loading player data...",
+            "player.opsStats.heading": "OPS vs Teams",
+            "player.stats.counting.heading": "Counting",
+            "player.stats.derived.heading": "Derived",
+            "player.stats.heading": "2023 Season Stats",
+            "player.worstAvgAgainstTeams.heading": "Worst AVG Against Teams",
+            "player.worstOpsAgainstTeams.heading": "Worst OPS Against Teams",
             "players": "Players",
-            "players.loading": "Loading players..."
+            "players.loading": "Loading players...",
+            "stats.ab": "AB",
+            "stats.avg": "AVG",
+            "stats.bb": "BB",
+            "stats.h": "H",
+            "stats.hbp": "HBP",
+            "stats.obp": "OBP",
+            "stats.ops": "OPS",
+            "stats.sf": "SF",
+            "stats.slg": "SLG",
+            "stats.tb": "TB"
         }
     }
 }
