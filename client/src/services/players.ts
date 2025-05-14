@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import type { Player } from "../types/players";
+import type { Player, PlayerStats } from "../types/players";
 
 type TokenResponse = {
     token: string;
@@ -35,18 +35,28 @@ export const playersApi = createApi({
                 },
             }),
         }),
-        getPlayerById: build.query<Player | undefined, PlayerByIdQuery>({
+        getPlayerById: build.query<PlayerStats[] | undefined, PlayerByIdQuery>({
             query: ({ id, token }) => ({
                 url: `mlb/player/${id}`,
                 headers: {
                     tempToken: token,
                 },
             }),
+            // Sort the player stats by game date
+            transformResponse: (response: PlayerStats[]) =>
+                response.sort(
+                    (a, b) =>
+                        new Date(a.date).getTime() - new Date(b.date).getTime()
+                ),
         }),
     }),
 });
 
-export const { useGetTokenQuery, useLazyGetPlayerByIdQuery } = playersApi;
+export const {
+    useGetTokenQuery,
+    useGetPlayersQuery,
+    useLazyGetPlayerByIdQuery,
+} = playersApi;
 
 // Custom hook that combines getToken and getPlayers
 export const useGetPlayersWithToken = () => {
@@ -73,7 +83,7 @@ export const useGetPlayersWithToken = () => {
     };
 };
 
-export const useGetPlayerByIdWithToken = (playerId: number) => {
+export const useGetPlayerStatsByIdWithToken = (playerId: number) => {
     const {
         data: tokenData,
         isLoading: isTokenLoading,
@@ -83,7 +93,7 @@ export const useGetPlayerByIdWithToken = (playerId: number) => {
     const token = tokenData?.token;
 
     const {
-        data: player,
+        data: playerStats,
         isLoading: isPlayersLoading,
         error: playersError,
     } = playersApi.endpoints.getPlayerById.useQuery(
@@ -94,7 +104,7 @@ export const useGetPlayerByIdWithToken = (playerId: number) => {
     );
 
     return {
-        player,
+        playerStats,
         isLoading: isTokenLoading || isPlayersLoading,
         error: tokenError || playersError,
     };

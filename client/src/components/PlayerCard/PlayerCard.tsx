@@ -1,19 +1,14 @@
+import { useNavigate } from "react-router-dom";
 import type { Player } from "../../types/players";
 import styles from "./PlayerCard.module.scss";
-import { useGetPlayerByIdWithToken } from "../../services/players";
 
 export const PlayerCard = ({ player }: { player: Player }) => {
+    const navigate = useNavigate();
+
     const { playerId, playerFullName, playerImage, teamImage } = player;
 
-    const playerDataFetcher = useGetPlayerByIdWithToken(playerId);
-
     const handleCardClick = async () => {
-        try {
-            const playerData = playerDataFetcher;
-            console.log(playerData);
-        } catch (error) {
-            console.error("Failed to fetch player data:", error);
-        }
+        navigate(`/player/${playerId}`);
     };
 
     return (

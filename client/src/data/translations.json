@@ -1,9 +1,12 @@
 {
     "en-US": {
         "translation": {
+            "errors.playerData": "Error loading player data",
             "errors.playersData": "Error loading players data",
             "loading": "Loading...",
-            "players": "Players"
+            "player.loading": "Loading player data...",
+            "players": "Players",
+            "players.loading": "Loading players..."
         }
     }
 }

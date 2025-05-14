@@ -5,6 +5,8 @@
     border: 0;
     border-radius: 0.5rem;
     cursor: pointer;
+    display: flex;
+    flex-direction: column;
     height: 100%;
     padding: 0;
     position: relative;
@@ -17,6 +19,8 @@
 }
 
 .playerImage {
+    aspect-ratio: 1;
+    object-fit: cover;
     padding-block-start: 1rem;
     width: 100%;
 }
