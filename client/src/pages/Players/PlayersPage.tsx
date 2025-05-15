@@ -9,6 +9,8 @@ export const PlayersPage = () => {
         <Layout>
             <h2>{t("players")}</h2>
 
+            <p>{t("players.description")}</p>
+
             <PlayersList />
         </Layout>
     );

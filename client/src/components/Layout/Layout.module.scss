@@ -1,6 +1,11 @@
 @use "../../styles/variables/colors";
 @use "../../styles/variables/z-indexes";
 
+.footer {
+    text-align: center;
+    padding: 1rem 2rem 2rem;
+}
+
 .header {
     background-color: colors.$color-background-300;
     left: 0;
@@ -11,13 +16,14 @@
 
     h1 {
         font-size: 1.5em;
+        margin: 0;
     }
 }
 
 .headerContainer {
     margin: auto;
     max-width: 85rem;
-    padding: 0.5rem 2rem;
+    padding: 1rem 2rem;
 }
 
 .main {
