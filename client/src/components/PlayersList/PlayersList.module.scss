@@ -1,3 +1,5 @@
+@use "../../styles/variables/colors";
+
 .list {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
@@ -5,4 +7,28 @@
     list-style: none;
     padding: 0;
     width: 100%;
+}
+
+.searchContainer {
+    margin-block-end: 3rem;
+}
+
+.searchForm {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.searchInput {
+    background-color: colors.$color-background-300;
+    border: 2px solid colors.$color-background-300;
+    border-radius: 0.25rem;
+    font-size: 1rem;
+    padding: 0.5rem 0.75rem;
+    outline: none;
+    transition: border-color 0.2s ease;
+
+    &:focus {
+        border-color: colors.$color-primary;
+    }
 }

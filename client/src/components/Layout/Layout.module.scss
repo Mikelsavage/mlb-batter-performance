@@ -4,7 +4,6 @@
 .header {
     background-color: colors.$color-background-300;
     left: 0;
-    padding: 0.5rem 2rem;
     position: fixed;
     top: 0;
     width: 100%;
@@ -13,6 +12,12 @@
     h1 {
         font-size: 1.5em;
     }
+}
+
+.headerContainer {
+    margin: auto;
+    max-width: 85rem;
+    padding: 0.5rem 2rem;
 }
 
 .main {

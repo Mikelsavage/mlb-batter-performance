@@ -191,9 +191,19 @@ export const SinglePlayerPage = () => {
         [playerStats]
     );
 
-    if (isLoading) return <div>{t("player.loading")}</div>;
+    if (isLoading)
+        return (
+            <Layout>
+                <div>{t("player.loading")}</div>
+            </Layout>
+        );
 
-    if (error) return <div>{t("errors.player")}</div>;
+    if (error)
+        return (
+            <Layout>
+                <div>{t("errors.player")}</div>
+            </Layout>
+        );
 
     const teamName = defaultTo(playerStats[0]?.currentTeamName, "");
 

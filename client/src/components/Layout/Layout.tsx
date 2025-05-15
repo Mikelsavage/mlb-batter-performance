@@ -7,7 +7,9 @@ type LayoutProps = {
 export const Layout = ({ children }: LayoutProps) => (
     <div className={styles.layout}>
         <header className={styles.header}>
-            <h1>Player Hitting Evaluations</h1>
+            <div className={styles.headerContainer}>
+                <h1>Player Hitting Evaluations</h1>
+            </div>
         </header>
 
         <main className={styles.main}>{children}</main>
