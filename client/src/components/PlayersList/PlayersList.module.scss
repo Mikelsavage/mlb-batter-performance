@@ -8,6 +8,7 @@
 .filters {
     align-items: flex-end;
     display: flex;
+    flex-wrap: wrap;
     gap: 2rem;
     justify-content: space-between;
     margin-block: 2rem 3rem;
