@@ -28,8 +28,7 @@ export const PlayersList = () => {
 
         return players.filter((player) => {
             const playerName = player.playerFullName.toLowerCase();
-            const playerNameParts = playerName.split(" ");
-            return playerNameParts.some((part) => part.includes(searchValue));
+            return playerName.includes(searchValue);
         });
     }, [players, searchValue]);
 
