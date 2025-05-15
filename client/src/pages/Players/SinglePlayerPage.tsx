@@ -1,5 +1,6 @@
 import { useTranslation } from "react-i18next";
-import { useParams } from "react-router";
+import { Link, useParams } from "react-router";
+import { ArrowBack } from "@mui/icons-material";
 import { LineChart } from "@mui/x-charts/LineChart";
 import { Layout } from "../../components/Layout/Layout";
 import {
@@ -26,6 +27,7 @@ import {
 } from "../../utils/statCalculations";
 import { Stats } from "../../components/Stats/Stats";
 import styles from "./SinglePlayerPage.module.scss";
+import { useMemo } from "react";
 
 type CalculatedStatsOverTimeReduceResult = {
     totalH: number;
@@ -71,7 +73,7 @@ export const SinglePlayerPage = () => {
     );
 
     const {
-        playerStats,
+        playerStats = [],
         isLoading: isGetPlayerStatsByIdLoading,
         error: getPlayerStatsByIdError,
     } = useGetPlayerStatsByIdWithToken(Number(playerId));
@@ -79,99 +81,121 @@ export const SinglePlayerPage = () => {
     const isLoading = isGetPlayersLoading || isGetPlayerStatsByIdLoading;
     const error = getPlayersError || getPlayerStatsByIdError;
 
-    if (isLoading) return <div>{t("player.loading")}</div>;
+    const calculatedStatsOverTime = useMemo(
+        () =>
+            reduce(
+                playerStats,
+                (
+                    result: CalculatedStatsOverTimeReduceResult,
+                    {
+                        BB,
+                        H,
+                        AB,
+                        HBP,
+                        SF,
+                        TB,
+                        date,
+                        opponent,
+                        oppImage,
+                        opponentId,
+                    }
+                ) => {
+                    // Track the total accumulated stats over time
+                    result.totalH += H;
+                    result.totalAB += AB;
+                    result.totalBB += BB;
+                    result.totalHBP += HBP;
+                    result.totalSF += SF;
+                    result.totalTB += TB;
 
-    if (error) return <div>{t("errors.player")}</div>;
+                    result.accumulatedStatsByDate.push({
+                        date: new Date(date),
+                        AVG: parseFloat(
+                            calculateAVG({
+                                AB: result.totalAB,
+                                H: result.totalH,
+                            }).toFixed(3)
+                        ),
+                        SLG: parseFloat(
+                            calculateSLG({
+                                AB: result.totalAB,
+                                TB: result.totalTB,
+                            }).toFixed(3)
+                        ),
+                        OBP: parseFloat(
+                            calculateOBP({
+                                AB: result.totalAB,
+                                BB: result.totalBB,
+                                H: result.totalH,
+                                HBP: result.totalHBP,
+                                SF: result.totalSF,
+                            }).toFixed(3)
+                        ),
+                        OPS: parseFloat(
+                            calculateOPS({
+                                AB: result.totalAB,
+                                BB: result.totalBB,
+                                H: result.totalH,
+                                HBP: result.totalHBP,
+                                SF: result.totalSF,
+                                TB: result.totalTB,
+                            }).toFixed(3)
+                        ),
+                    });
 
-    const calculatedStatsOverTime = reduce(
-        playerStats,
-        (
-            result: CalculatedStatsOverTimeReduceResult,
-            { BB, H, AB, HBP, SF, TB, date, opponent, oppImage, opponentId }
-        ) => {
-            // Track the total accumulated stats over time
-            result.totalH += H;
-            result.totalAB += AB;
-            result.totalBB += BB;
-            result.totalHBP += HBP;
-            result.totalSF += SF;
-            result.totalTB += TB;
+                    // Initialize opponent stats if not already set
+                    if (!result.statsByTeamFaced[opponentId]) {
+                        result.statsByTeamFaced[opponentId] = {
+                            teamImage: oppImage,
+                            teamName: opponent,
+                            totalH: 0,
+                            totalAB: 0,
+                            totalBB: 0,
+                            totalHBP: 0,
+                            totalSF: 0,
+                            totalTB: 0,
+                            GP: 0,
+                        };
+                    }
 
-            result.accumulatedStatsByDate.push({
-                date: new Date(date),
-                AVG: parseFloat(
-                    calculateAVG({
-                        AB: result.totalAB,
-                        H: result.totalH,
-                    }).toFixed(3)
-                ),
-                SLG: parseFloat(
-                    calculateSLG({
-                        AB: result.totalAB,
-                        TB: result.totalTB,
-                    }).toFixed(3)
-                ),
-                OBP: parseFloat(
-                    calculateOBP({
-                        AB: result.totalAB,
-                        BB: result.totalBB,
-                        H: result.totalH,
-                        HBP: result.totalHBP,
-                        SF: result.totalSF,
-                    }).toFixed(3)
-                ),
-                OPS: parseFloat(
-                    calculateOPS({
-                        AB: result.totalAB,
-                        BB: result.totalBB,
-                        H: result.totalH,
-                        HBP: result.totalHBP,
-                        SF: result.totalSF,
-                        TB: result.totalTB,
-                    }).toFixed(3)
-                ),
-            });
+                    // Add total stats by team faced
+                    result.statsByTeamFaced[opponentId] = {
+                        ...result.statsByTeamFaced[opponentId],
+                        GP: result.statsByTeamFaced[opponentId].GP + 1,
+                        totalH: result.statsByTeamFaced[opponentId].totalH + H,
+                        totalAB:
+                            result.statsByTeamFaced[opponentId].totalAB + AB,
+                        totalBB:
+                            result.statsByTeamFaced[opponentId].totalBB + BB,
+                        totalHBP:
+                            result.statsByTeamFaced[opponentId].totalHBP + HBP,
+                        totalSF:
+                            result.statsByTeamFaced[opponentId].totalSF + SF,
+                        totalTB:
+                            result.statsByTeamFaced[opponentId].totalTB + TB,
+                    };
 
-            // Initialize opponent stats if not already set
-            if (!result.statsByTeamFaced[opponentId]) {
-                result.statsByTeamFaced[opponentId] = {
-                    teamImage: oppImage,
-                    teamName: opponent,
+                    return result;
+                },
+                {
                     totalH: 0,
                     totalAB: 0,
                     totalBB: 0,
                     totalHBP: 0,
                     totalSF: 0,
                     totalTB: 0,
-                    GP: 0,
-                };
-            }
-
-            // Add total stats by team faced
-            result.statsByTeamFaced[opponentId] = {
-                ...result.statsByTeamFaced[opponentId],
-                GP: result.statsByTeamFaced[opponentId].GP + 1,
-                totalH: result.statsByTeamFaced[opponentId].totalH + H,
-                totalAB: result.statsByTeamFaced[opponentId].totalAB + AB,
-                totalBB: result.statsByTeamFaced[opponentId].totalBB + BB,
-                totalHBP: result.statsByTeamFaced[opponentId].totalHBP + HBP,
-                totalSF: result.statsByTeamFaced[opponentId].totalSF + SF,
-                totalTB: result.statsByTeamFaced[opponentId].totalTB + TB,
-            };
-
-            return result;
-        },
-        {
-            totalH: 0,
-            totalAB: 0,
-            totalBB: 0,
-            totalHBP: 0,
-            totalSF: 0,
-            totalTB: 0,
-            accumulatedStatsByDate: [],
-            statsByTeamFaced: {},
-        } as CalculatedStatsOverTimeReduceResult
+                    accumulatedStatsByDate: [],
+                    statsByTeamFaced: {},
+                } as CalculatedStatsOverTimeReduceResult
+            ),
+        [playerStats]
     );
+
+    if (isLoading) return <div>{t("player.loading")}</div>;
+
+    if (error) return <div>{t("errors.player")}</div>;
+
+    const teamName = defaultTo(playerStats[0]?.currentTeamName, "");
 
     const accumulatedStatsByDate = defaultTo(
         get(calculatedStatsOverTime, "accumulatedStatsByDate"),
@@ -229,21 +253,34 @@ export const SinglePlayerPage = () => {
     return (
         <Layout>
             <div className={styles.pageContent}>
-                <div>
-                    <img
-                        src={player?.playerImage}
-                        alt={player?.playerFullName}
-                    />
+                <div className={styles.playerInfoContainer}>
+                    <Link className={styles.backLink} to="/">
+                        <ArrowBack /> All Players
+                    </Link>
+
+                    <div className={styles.playerImageContainer}>
+                        <img
+                            className={styles.playerImage}
+                            src={player?.playerImage}
+                            alt={player?.playerFullName}
+                        />
+
+                        <div className={styles.teamImage}>
+                            <img src={player?.teamImage} alt={teamName} />
+                        </div>
+                    </div>
 
                     <h2>{player?.playerFullName}</h2>
+
+                    <h3>{teamName}</h3>
                 </div>
 
                 {!isEmpty(accumulatedStatsByDate) && (
-                    <>
+                    <div className={styles.playerContentContainer}>
                         <div className={styles.statsContainer}>
-                            <div className={styles.statsContainer}>
-                                <h2>{t("player.stats.heading")}</h2>
+                            <h2>{t("player.stats.heading")}</h2>
 
+                            <div className={styles.statsContainer}>
                                 <h3>{t("player.stats.derived.heading")}</h3>
 
                                 <Stats
@@ -392,6 +429,8 @@ export const SinglePlayerPage = () => {
                         </div>
 
                         <div className={styles.chartContainer}>
+                            <h2>{t("player.avgOverTimeChart.heading")}</h2>
+
                             <LineChart
                                 dataset={
                                     calculatedStatsOverTime.accumulatedStatsByDate
@@ -425,6 +464,8 @@ export const SinglePlayerPage = () => {
                         </div>
 
                         <div className={styles.chartContainer}>
+                            <h2>{t("player.opsOverTimeChart.heading")}</h2>
+
                             <LineChart
                                 dataset={
                                     calculatedStatsOverTime.accumulatedStatsByDate
@@ -444,7 +485,7 @@ export const SinglePlayerPage = () => {
                                 height={500}
                             />
                         </div>
-                    </>
+                    </div>
                 )}
             </div>
         </Layout>
